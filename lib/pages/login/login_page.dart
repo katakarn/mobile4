@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile4/pages/home/home_page.dart';
+import 'package:mobile4/pages/home/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
+  static const routeName = '/login';
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -15,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   String pass = '123456';
   var dot = 0;
 
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,50 +40,57 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         body: Container(
           decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/Khun.png'),
-                fit: BoxFit.cover
-            )
+
+            gradient: LinearGradient(
+              // ไล่เฉดจากมุมบนซ้ายไปมุมล่างขวาของ Container
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              // ไล่เฉดจากสี..ไปสี..
+              colors: [
+                Colors.redAccent,
+                Colors.purpleAccent,
+              ],
+            ),
           ),
 
           child: SafeArea(
             child: Column(
               children: [
                 Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                       children:[
-                         Icon(
-                           Icons.lock_outline_rounded,
-                           size: 100,
-                           color: Colors.indigoAccent
-                         ),
-                         Padding(
-                           padding: const EdgeInsets.all(3.0),
-                           child: Text(
-                             'LOGIN',
-                             style: GoogleFonts.mali(fontSize: 50,fontWeight: FontWeight.bold,color: Colors.white),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:[
+                      Icon(
+                          Icons.lock_outline_rounded,
+                          size: 100,
+                          color: Colors.indigoAccent
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text(
+                          'LOGIN',
+                          style: GoogleFonts.mali(fontSize: 50,fontWeight: FontWeight.bold,color: Colors.white),
 
-                           ),
-                         ),
-                         Padding(
-                           padding: const EdgeInsets.all(3.0),
-                           child: Text(
-                             'Enter PIN to login',
-                             style: Theme.of(context).textTheme.bodyText2,
-                           ),
-                         ),
-                         Padding(
-                           padding: const EdgeInsets.all(40.0),
-                           child: Row(
-                             mainAxisAlignment: MainAxisAlignment.center,
-                             children: [for (var item in iconList) item],
-                           ),
-                         )
-                       ],
-            ),
-          ),
-        
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text(
+                          'Enter PIN to login',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(40.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [for (var item in iconList) item],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+
                 Container(
                   //color: Colors.pink,
                   child: Column(
@@ -107,6 +115,21 @@ class _LoginPageState extends State<LoginPage> {
                     }).toList(),
                   ),
                 ),
+                // Container(
+                //     color: Colors.pinkAccent,
+                //     child: Column(
+                //       children: [
+                //         for(var row=0; row<3; row++)
+                //           Row(
+                //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //             children: [
+                //               for(var col=1; col<=3; col++)
+                //                 LoginButton(number: row * 3 + col),
+                //             ],
+                //           ),
+                //       ],
+                //     )
+                // ),
               ],
             ),
           ),
@@ -127,8 +150,8 @@ class _LoginPageState extends State<LoginPage> {
         dot = 0;
         return _showMaterialDialog('ERROR', 'Invalid PIN. Please try again.');
       }else if(input.length == 6 && input == pass){
-        dot = 0;
         input = '';
+        dot = 0;
         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()));
       }
     });
@@ -137,34 +160,34 @@ class _LoginPageState extends State<LoginPage> {
 
 
 
-void _showMaterialDialog(String title, String msg) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(
-          title,
-          style: GoogleFonts.mali(fontSize: 30,color: Colors.red),
-        ),
-        content: Text(
-          msg,
-          style: GoogleFonts.mali(),
-        ),
-        actions: [
-          TextButton(
-            child: const Text('OK'),
-            style: TextButton.styleFrom(
-              textStyle: GoogleFonts.mali(color: Colors.blue,fontSize: 15),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+  void _showMaterialDialog(String title, String msg) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            title,
+            style: GoogleFonts.mali(fontSize: 30,color: Colors.red),
           ),
-        ],
-      );
-    },
-  );
-}
+          content: Text(
+            msg,
+            style: GoogleFonts.mali(),
+          ),
+          actions: [
+            TextButton(
+              child: const Text('OK'),
+              style: TextButton.styleFrom(
+                textStyle: GoogleFonts.mali(color: Colors.blue,fontSize: 15),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 class LoginButton extends StatelessWidget {
   final int number;
@@ -191,7 +214,10 @@ class LoginButton extends StatelessWidget {
           border: Border.all(width: 2.0,color: Colors.white70),
           boxShadow: [
             BoxShadow(
-                color: Colors.blue)
+                color: Colors.pink.shade100,
+                blurRadius: 10,
+                offset: Offset(5, 5),
+                spreadRadius: 1)
           ],
         ),
         child: Center(
