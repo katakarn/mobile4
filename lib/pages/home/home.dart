@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile4/pages/food/food_list_page.dart';
 import 'package:mobile4/pages/login/login_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildSubPage() {
     switch (_subPageIndex) {
       case 1:
-        return FoodPage();
+        return FoodListPage();
       case 2:
         return ProfilePage();
       default:
